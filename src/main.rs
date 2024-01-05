@@ -1,26 +1,51 @@
+use colored::*;
+mod stack;
+use stack::Stack;
+mod utils;
+use utils::input;
 
-
-// first set size for the stack
-fn new_stack(max_size: usize)->Vec<u32> {
-    let vec:Vec<u32> = Vec::with_capacity(max_size);
-    vec
-}
-
-// pop the elements but should check if there are elements or not 
-fn pop_elements(stack:&mut Vec<u32>) ->Option<Vec<u32>> {
-    let mut pop_val:Option<u32> = stack.pop();
-    println!("pop_element {:?}",pop_val);
-    pop_val 
-}
-// push element but check if it exceeds the max size
-fn push_elements(stack:&mut Vec<u32>,item:u32,max_size:usize) -> Option<Vec<u32>> {
-    if stack.len()==max_size{
-        println!("can't push more than{}",stack.len());
-    }else{
-        stack.push(item);
-        stack
-    }
-}
 fn main() {
-    println!("Hello, world!");
+    println!("if you want to create a stack afford the size of the stack ");
+    let size_stack: usize = input();
+    let mut stack = Stack::new(size_stack as usize);
+
+    loop {
+        println!(
+            "\n\n{}\n",
+            " ----------Menu ---------- "
+                .red()
+                .bold()
+                .bright_yellow()
+                .blink()
+        );
+        println!(
+            "{} {} {} {} {}",
+            "  1-push \n".green().bold().on_black(),
+            " 2-pop  \n".yellow().bold().on_black(),
+            " 3-Display \n".blue().bold().on_black(),
+            " 4-size \n".magenta().bold().on_black(),
+            " 5-exit".red().bold().on_black()
+        );
+        println!("enter one of methods : ");
+
+        let choice = input();
+        match choice {
+            1 => {
+                println!("enter the value to insert");
+                let element:usize = input();
+                Stack::push(&mut stack, element, size_stack as usize);
+            }
+            2 => println!("you poped {:?} from the stack", Stack::pop(&mut stack)),
+            3 => println!(
+                "The stack now is {:?}",
+                &stack.data
+            ),
+            4 => println!("the size of the stack now is {:?}", Stack::size(&stack)),
+            5 => {
+                println!("see u latter :)");
+                break;
+            }
+            _ => println!("wrong choice"),
+        }
+    }
 }
