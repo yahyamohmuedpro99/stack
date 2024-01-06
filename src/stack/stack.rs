@@ -21,7 +21,6 @@ where
             println!("Can't push more than {}", max_size);
         } else {
             self.data.push(item);
-            println!("Stack: {:?}", self.data);
         }
     }
 
